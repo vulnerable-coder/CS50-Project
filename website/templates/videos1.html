@@ -1,0 +1,96 @@
+{% extends "base.html" %} {% block title %}Videos{% endblock %} 
+{% block content%}
+<head>
+    <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../static/css/videostyle.css"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS50 Project
+    </title>
+</head>
+<body>
+    <div class="part5">
+    <h2> About</h2>
+    <h5>
+    <p>
+        <br>1. This page contains all the recorded sessions conducted by our 314e Seniors.<br><br>2. You can view those videos in full screen, with multiple speed options available for playback.<br><br>3. All the hotkeys such as Spacebar, Arrowkeys etc. that are generally used during video playback are available for your convenience.
+    </p>
+    </h5>
+</div>
+    <header>
+        
+            <div class="part3">
+              <h2 >To visit 314e wiki page, click below.</h2>
+                <h4> <a href="https://wiki.314ecorp.com/en/new-employee-orientation/software-engineer-non-cs" >Non-CS Students</a></h4>
+                <h4><a href="https://wiki.314ecorp.com/en/new-employee-orientation/software-engineer-cs" >CS-Students</a></h4>
+            </div>
+            
+        </header>
+        <main>
+            <h2 class="Lineheighth1 togotolearningpage">
+             Check out the sessions conducted by 314e Seniors :-
+            </h2>
+            <div class="videocontainer">
+                <h2 class= "Lineheighth2 upperparagraphaboutvideospage">
+                        <div class="videocard">
+                            <div>
+                                <h2 class="videocardheading" >
+                                    Session-1
+                                </h2>
+                            </div>
+                            <div>
+                                <h3 class="videocarddescription">
+                                    Python by Ashutosh
+                                </h3>
+                            </div>
+                            <div class = "VideoMarginPadding videocontent">
+                                <video id = "VideoPlayer" class = 'video-js vjs-big-play-centered' controls poster="../static/python.jpeg" width="720" height="480" >
+                                    <source src = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type = "video/mp4" />
+                                    <p class="vjs-no-js">
+                                        To view this video please enable JavaScript, and consider upgrading to a web browser that
+                                        <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a >
+                                        </p>
+                                    </video>
+                                    <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+                                    <script src="//cdn.sc.gl/videojs-hotkeys/0.2/videojs.hotkeys.min.js"></script>
+                                    <script type = "text/javascript" ; src = "../static/video-player.js"></script>
+                            </div>
+                            </div>
+                            <br>
+                            <div class="videocard">
+                                <div>
+                                    <h2 class="videocardheading">
+                                    Session-2
+                                    </h2>
+                                </div>
+                                <div>
+                                    <h3 class="videocarddescription">
+                                        Python by Ashutosh
+                                    </h3>
+                                </div>
+                                <div class = "VideoMarginPadding videocontent">
+                                    <video id = "VideoPlayer2" class = 'video-js vjs-big-play-centered' controls poster="../static/python.jpeg" width="720" height="480">
+                                        <source src = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type = "video/mp4" />
+                                        <p class="vjs-no-js">
+                                            To view this video please enable JavaScript, and consider upgrading to a web browser that
+                                            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a >
+                                            </p>
+                                        </video>
+                                        <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+                                        <script src="//cdn.sc.gl/videojs-hotkeys/0.2/videojs.hotkeys.min.js"></script>
+                                        <script type = "text/javascript" ; src = "../static/video-player.js"></script>
+                                    </div>
+                        </div>
+                        </h2> 
+                </div>       
+        </main>
+        <script type="text/javascript" src="../static/vanilla-tiltvideo.js"></script>
+        <script>
+            VanillaTilt.init(document.querySelectorAll(".videocard"), {
+		max: 10,
+		speed: 400,
+        });
+        </script>
+    </body>
+{% endblock %}

@@ -1,0 +1,359 @@
+<!-- {% extends "base.html" %} {% block title %}Daily Progress{% endblock %} 
+{% block content%} -->
+  <!-- jquery for Bootstrap -->
+  <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+
+  <!-- font awesome -->
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Vue.js script source -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+  crossorigin="anonymous"
+/>
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  crossorigin="anonymous"
+/>
+<link rel="stylesheet" href= "../static/css/navbar.css"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yatra+One&display=swap" rel="stylesheet"> 
+    <title>Subjectwise Progress</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+  <style>
+
+
+    .courseStats {
+      font-size: 20px;
+    }
+
+
+    .taskDone {
+      text-decoration: line-through;
+    }
+    .completionProgressGreyBar {
+      background-color: lightsteelblue;
+      border-radius: 5px;
+    }
+    .completionProgressGreenBar {
+      width: 80%;
+      height: 30px;
+      background-image: linear-gradient(to right,rgb(219, 219, 219),rgb(85, 253, 203));
+      border-radius: 5px;
+    }
+    .green {
+      background-color: springgreen;
+    }
+    .red {
+      background-color: indianred;
+    }
+    h1{
+      text-align: center;
+      text-emphasis:initial;
+      text-shadow: rgb(0, 0, 0);
+      transform-style: preserve-3d;
+      color: rgb(0, 0, 0);
+      text-rendering: auto;
+      font-weight: bolder;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    ::selection{
+  color: #ffff;
+  background: rgb(142, 73, 232);
+}
+
+
+body{
+  width: 100%;
+  height: 100vh;
+  /* overflow: hidden; */
+  padding: 10px;
+  /* background: linear-gradient(to bottom, #68EACC 0%, #497BE8 100%); */
+  background: linear-gradient(to bottom, #fcffcc 0%, #fcfbdc 100%);
+  /* background: rgb(153, 13, 196); */
+  opacity: o.4;
+}
+  </style>
+  
+  <title>Course Progress Tracker</title>
+</head>
+<body>
+  <div class="navbar1" id="navbar">
+    <a href="https://www.314e.com/">
+        <img src="../static/314e-_logo.jpg" 
+          width="28" height="28">
+    </a>
+      <li><a class=" active"><i><b>Welcome</b></i></a></li>
+      <li><a id="home" href="/">Home</a></li>
+      <li><a id="notes" href="/notes">Notes</a></li>
+      <div class="dropdown" id="CourseProgress" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="dropbtn">Track Progress
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <li><a id="dp" href="/dp" onClick="window.location.href='/dp'">Daily Progress</a></li>
+          <a id="sp" href="/sp" onClick="window.location.href='/sp'">Subjectwise Progress</a>
+
+        </div>
+      </div>
+      <li><a id="videos" href="/videos">Videos</a></li>
+        <li style="float:right"><a class="active" id="logout" href="/logout">Logout</a></li>
+  </div>
+<div class="container">
+  <div id="app" class="col-sm-10 col-sm-offset-1">
+   <!-- <br>
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="text-center">Admin Panel</h3>
+      </div>
+      
+      <div class="panel-body">
+        <div class="col-sm-4">
+          <label for="">Display Title</label>
+          <input type="checkbox" v-model="displayTitle">
+          <br>
+          <label for="">Display Add New Task</label>
+          <input type="checkbox" v-model="displayAddTasks">
+          <br>
+          <label for="">Display Task Stats</label>
+          <input type="checkbox" v-model="displayTaskStatistics">
+        </div>
+        <div class="col-sm-4">
+          <label for="">Display Tasks</label>
+          <input type="checkbox" v-model="displayTasks">
+          <br>
+          <label for="">Display Task Completion Progress Bar</label>
+          <input type="checkbox" v-model="displayProgressBar">
+        </div>
+        <div class="col-sm-4">
+          <label for="">Change App Title</label>
+          <input type="text" :value="appTitle" v-on:input="changeAppTitle">
+        </div>
+      </div>
+    </div>
+
+    <br>
+    _-->
+    <h1 v-if="displayTitle">Course Progress</h1>
+    
+    <table class="table" v-if="displayTasks && tasks.length > 0">
+      <thead>
+        
+        <th>Check Mark Course Completed</th>
+        <th>Course Name</th>
+        <th>Delete</th>
+      </thead>
+
+      
+      
+      <tbody>
+        <tr v-for="task in tasks">
+          <td><input type="checkbox" v-model="task.done"></td>
+          <td><span :class="{ taskDone: task.done }">{{ task.name }}</span></td>
+          <td><button class="btn btn-danger btn-block" v-on:click="deleteTask(task)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    
+    
+    
+    <div class="panel panel-info" v-if="displayAddTasks">
+      <div class="panel-heading">
+        <h3 class="text-center">Add New Course</h3>
+      </div>
+      
+      <div class="panel-body">
+        <form v-on:submit="addTask">
+          <div class="col-sm-8">
+            <input type="text" class="form-control" v-model="tasks.name">
+          </div>
+          
+          <div class="col-sm-4">
+            <input type="submit" class="btn btn-primary btn-block" value="Add">
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <div class="panel panel-success" v-if="displayProgressBar">
+      <div class="panel-heading">
+        <h3 class="text-center">Completion Progress Bar</h3>
+      </div>
+      
+      <div class="panel-body">
+        <div class="col-sm-8 col-sm-offset-2">
+          <div class="completionProgressGreyBar">
+            <div class="completionProgressGreenBar text-center" :style="{ width: percentageOfTasksCompleted + '%' }">{{ Math.round(percentageOfTasksCompleted) }}%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="panel panel-info" v-if="displayTaskStatistics">
+      <div class="panel-heading">
+        <h3 class="text-center">Course Statistics</h3>
+      </div>
+      
+      <div class="panel-body">
+        <div class="col-sm-6">
+          <p class="courseStats" v-on:mouseover="changeTotalTasks">Total Courses: {{ tasks.length }}</p>
+          <p class="courseStats" v-on:mouseover="changeLeftToDo">Courses Left To Do: {{ leftToDo }}</p>
+          <p class="courseStats" v-on:mouseover="changeCheckMarked">Check Marked Courses: {{ checkMarkedTasks }}</p>
+          <p class="courseStats" v-on:mouseover="changeDeleted">Removed courses: {{ this.deletedTasks }}</p>
+        </div>
+        <div class="col-sm-6">
+         <!-- <h3>{{ displayedTasksStatView }}</h3> -->
+          <h3>Total Courses: {{ tasks.length }}</h3>
+          <h3 style="padding: 10px;" v-bind:class="manageable" class="green">{{ leftToDo < 5 ? 'On schedule' : 'Lagging' }}</h3>
+        </div>
+      </div>
+    </div>
+
+
+    
+    <!-- <table class="table" v-if="displayTasks && tasks.length > 0">
+      <thead>
+        
+        <th>Check Mark Course Completed</th>
+        <th>Course Name</th>
+        <th>Delete</th>
+      </thead>
+
+      
+      
+      <tbody>
+        <tr v-for="task in tasks">
+          <td><input type="checkbox" v-model="task.done"></td>
+          <td><span :class="{ taskDone: task.done }">{{ task.name }}</span></td>
+          <td><button class="btn btn-danger btn-block" v-on:click="deleteTask(task)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table> -->
+    
+    <h3 class="text-center" v-else>The Course list has been hidden or there are no courses to display</h3>
+    
+  </div>
+</div>
+<script
+src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"
+></script>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+crossorigin="anonymous"
+></script>
+<script
+src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+crossorigin="anonymous"
+></script>
+
+<script
+type="text/javascript"
+src="{{ url_for('static', filename='index.js') }}"
+></script>
+<script>
+  let todoApp = new Vue({
+    el: '#app',
+    data: {
+      appTitle: 'Daily Tasks',
+      displayTitle: true,
+      displayTasks: true,
+      displayProgressBar: true,
+      displayAddTasks: true,
+      displayTaskStatistics: true,
+      displayedTasksStat: 'totalTasks',
+      deletedTasks: 0,
+      tasks: [{name:"CS50",done:false, },{name:"Introduction to web development", done:false, },{name:"Four Semesters of CS",done:false, },{name:"Networking Engineering Fundamentals",done:false, },{name:"Service-Based Architectures",done:false, },{name:"Complete Intro to Databases",done:false, },{name:"Understanding APIs and RESTful APIs Crash course",done:false, }]
+    },
+    methods: {
+      changeAppTitle: function(event) {
+        this.appTitle = event.target.value;
+      },
+      addTask: function(event) {
+        event.preventDefault();
+        
+        if (this.tasks.name !== '' && this.tasks.name !== undefined) {
+
+          this.tasks.push({
+            name: this.tasks.name,
+            done: false,
+          });
+        }
+      },
+      deleteTask: function(task) {
+        this.tasks.splice(this.tasks.indexOf(task), 1);
+        this.deletedTasks++;
+      },
+      changeTotalTasks: function() {
+        this.displayedTasksStat = 'totalTasks';
+      },
+      changeLeftToDo: function() {
+        this.displayedTasksStat = 'leftToDo';
+      },
+      changeCheckMarked: function() {
+        this.displayedTasksStat = 'checkMarked';
+      },
+      changeDeleted: function() {
+        this.displayedTasksStat = 'deletedTasks';
+      }
+    },
+    computed: {
+      checkMarkedTasks: function() {
+        let count = 0;
+        for (let i = 0; i < this.tasks.length; ++i) {
+          if (this.tasks[i].done == true) {
+            count ++;
+          }
+        }
+        return count;
+      },
+      leftToDo: function() {
+        return this.tasks.length - this.checkMarkedTasks;
+      },
+      displayedTasksStatView: function() {
+        if (this.displayedTasksStat == 'totalTasks') {
+          return 'Total Tasks: ' + this.tasks.length;
+        } else if (this.displayedTasksStat == 'leftToDo') {
+          return 'Tasks Left: ' + this.leftToDo;
+        } else if (this.displayedTasksStat == 'checkMarked') {
+          return 'Check Marked Tasks: ' + this.checkMarkedTasks;
+        } else if (this.displayedTasksStat == 'deletedTasks') {
+          return 'Deleted Tasks: ' + this.deletedTasks;
+        }
+      },
+      manageable: function() {
+        if (this.leftToDo < 5) {
+          return 'green';
+        } else {
+          return 'red';
+        }
+      },
+      percentageOfTasksCompleted: function() {
+        if (this.tasks.length == 0) {
+          return 0;
+        } else {
+          return (this.checkMarkedTasks / this.tasks.length) * 100;
+        }
+      }
+    }
+  });
+</script>
+</body>
+{% endblock %}

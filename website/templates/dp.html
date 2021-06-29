@@ -1,0 +1,318 @@
+<link
+rel="stylesheet"
+href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+crossorigin="anonymous"
+/>
+<title>Daily Progress</title>
+<link
+rel="stylesheet"
+href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+crossorigin="anonymous"
+/>
+<link rel="stylesheet" href= "../static/css/navbar.css">  
+    <title>daily tasks</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+  
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&display=swap" rel="stylesheet"> 
+ <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+
+  <!-- font awesome -->
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Vue.js script source -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script src="https://kit.fontawesome.com/f229202056.js" crossorigin="anonymous"></script>
+
+  <style>
+    .taskDone {
+      text-decoration: line-through;
+    }
+    .completionProgressGreyBar {
+      background-color: lightsteelblue;
+      border-radius: 20px;
+      border: 1px solid black;
+    }
+    .completionProgressGreenBar {
+      width: 80%;
+      
+      background-image: linear-gradient(to right,rgb(27, 235, 217),rgb(59, 72, 253));
+      border-radius: 20px;
+    }
+    .green {
+      background-color: rgb(0, 255, 106);
+    }
+    .red {
+      background-color: rgba(205, 92, 92, 0.171);
+    }
+    h1{
+      text-align: center;
+      text-emphasis:initial;
+      text-shadow: rgb(26, 25, 31);
+      transform-style: preserve-3d;
+      color: whitesmoke;
+      text-rendering: auto;
+      font-weight: bolder;
+      animation-fill-mode: forwards;
+      font-size: 57px;
+      }
+    .panel .panel-info{
+      box-shadow: 1px 1px 1px gray;
+      background-image: radial-gradient(rgb(83, 3, 83)violet);
+     }
+    ::selection{
+  color: #ffff;
+  background: rgb(109, 15, 231);
+}
+body{
+  width: 100%;
+  height: 100vh;
+  /* overflow: hidden; */
+  padding: 10px;
+  background: rgb(153, 13, 196);
+  opacity: o.4;
+ 
+}
+  </style>
+  
+  
+<body>
+  <div class="navbar1" id="navbar">
+    <a href="https://www.314e.com/">
+        <img src="../static/314e-_logo.jpg" 
+          width="28" height="28">
+    </a>
+      <li><a class=" active"><i><b>Welcome</b></i></a></li>
+      <li><a id="home" href="/">Home</a></li>
+      <li><a id="notes" href="/notes">Notes</a></li>
+      <div class="dropdown" id="CourseProgress" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="dropbtn">Track Progress
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <li><a id="dp" href="/dp" onClick="window.location.href='/dp'">Daily Progress</a></li>
+          <a id="sp" href="/sp" onClick="window.location.href='/sp'">Subjectwise Progress</a>
+          
+        </div>
+      </div>
+      <li><a id="videos" href="/videos">Videos</a></li>
+      <li style="float:right"><a class="active" id="logout" href="/logout">Logout</a></li>
+    </div>
+<div class="container">
+  <div id="app" class="col-sm-10 col-sm-offset-1">
+   <!-- <br>
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="text-center">Admin Panel</h3>
+      </div>
+      
+      <div class="panel-body">
+        <div class="col-sm-4">
+          <label for="">Display Title</label>
+          <input type="checkbox" v-model="displayTitle">
+          <br>
+          <label for="">Display Add New Task</label>
+          <input type="checkbox" v-model="displayAddTasks">
+          <br>
+          <label for="">Display Task Stats</label>
+          <input type="checkbox" v-model="displayTaskStatistics">
+        </div>
+        <div class="col-sm-4">
+          <label for="">Display Tasks</label>
+          <input type="checkbox" v-model="displayTasks">
+          <br>
+          <label for="">Display Task Completion Progress Bar</label>
+          <input type="checkbox" v-model="displayProgressBar">
+        </div>
+        <div class="col-sm-4">
+          <label for="">Change App Title</label>
+          <input type="text" :value="appTitle" v-on:input="changeAppTitle">
+        </div>
+      </div>
+    </div>
+
+    <br>
+    _-->
+    <h1 v-if="displayTitle"> {{this.appTitle}}</h1>
+    
+    <div class="panel panel-info" v-if="displayAddTasks">
+      <div class="panel-heading">
+        <h3 class="text-center">Add New Task</h3>
+      </div>
+      
+      <div class="panel-body">
+        <form v-on:submit="addTask">
+          <div class="col-sm-8">
+            <input type="text" class="form-control" v-model="tasks.name">
+          </div>
+          
+          <div class="col-sm-4">
+          <input class="btn  btn-block" value="Add Task"type=submit style="border-radius: 2px; background: rgb(10, 120, 223);">
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <div class="panel panel-success" v-if="displayProgressBar">
+      <div class="panel-heading">
+        <h3 class="text-center">Completion Progress Bar</h3>
+      </div>
+      
+      <div class="panel-body">
+        <div class="col-sm-8 col-sm-offset-2">
+          <div class="completionProgressGreyBar">
+            <div class="completionProgressGrayBar completionProgressGreenBar text-center" :style="{ width: percentageOfTasksCompleted + '%',}"> {{Math.round(percentageOfTasksCompleted) }}%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="panel panel-info" v-if="displayTaskStatistics">
+      <div class="panel-heading">
+        <h3 class="text-center">Tasks Statistics</h3>
+      </div>
+      
+      <div class="panel-body">
+        <div class="col-sm-6">
+          <p v-on:mouseover="changeTotalTasks">Total Tasks:  {{tasks.length }}</p>
+          <p v-on:mouseover="changeLeftToDo">Tasks Left To Do: {{ leftToDo }}</p>
+          <p v-on:mouseover="changeCheckMarked">Check Marked Tasks: {{ checkMarkedTasks }}</p>
+          <p v-on:mouseover="changeDeleted">Deleted Tasks: {{ this.deletedTasks }}</p>
+        </div>
+        <div class="col-sm-6">
+          <h3>{{ displayedTasksStatView }}</h3>
+          <h3 style="padding: 10px; " v-bind:class="manageable" class="green">{{leftToDo < 10 ? 'Manageable' : 'Tasks Overload' }}</h3>
+        </div>
+      </div>
+    </div>
+    
+    <table class="table" v-if="displayTasks && tasks.length > 0" style="border-radius: 5px; background: rgb(0, 174, 255);">
+      <thead>
+        <th>Check Mark Done</th> 
+        <th>Task Name</th>
+        <th>Delete</th>
+        
+      </thead>
+      
+      <tbody>
+        <tr v-for="task in tasks">
+          <td><input type="checkbox" v-model="task.done"></td>
+          <td><span :class="{ taskDone: task.done }"> {{ task.name }}</span></td>
+          <td><button class="btn btn-danger btn-block" v-on:click="deleteTask(task)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <h3 class="text-center" v-else>The tasks list has been hidden or there are no tasks to display</h3>
+    
+  </div>
+</div>
+<script
+src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"
+></script>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+crossorigin="anonymous"
+></script>
+<script
+src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+crossorigin="anonymous"
+></script>
+
+<script>
+  let todoApp = new Vue({
+    el: '#app',
+    data: {
+      appTitle: 'Daily Tasks',
+      displayTitle: true,
+      displayTasks: true,
+      displayProgressBar: true,
+      displayAddTasks: true,
+      displayTaskStatistics: true,
+      displayedTasksStat: 'totalTasks',
+      deletedTasks: 0,
+      tasks: []
+    },
+    methods: {
+      changeAppTitle: function(event) {
+        this.appTitle = event.target.value;
+      },
+      addTask: function(event) {
+        event.preventDefault();
+        
+        if (this.tasks.name !== '' && this.tasks.name !== undefined) {
+
+          this.tasks.push({
+            name: this.tasks.name,
+            done: false,
+          });
+        }
+      },
+      deleteTask: function(task) {
+        this.tasks.splice(this.tasks.indexOf(task), 1);
+        this.deletedTasks++;
+      },
+      changeTotalTasks: function() {
+        this.displayedTasksStat = 'totalTasks';
+      },
+      changeLeftToDo: function() {
+        this.displayedTasksStat = 'leftToDo';
+      },
+      changeCheckMarked: function() {
+        this.displayedTasksStat = 'checkMarked';
+      },
+      changeDeleted: function() {
+        this.displayedTasksStat = 'deletedTasks';
+      }
+    },
+    computed: {
+      checkMarkedTasks: function() {
+        let count = 0;
+        for (let i = 0; i < this.tasks.length; ++i) {
+          if (this.tasks[i].done == true) {
+            count ++;
+          }
+        }
+        return count;
+      },
+      leftToDo: function() {
+        return this.tasks.length - this.checkMarkedTasks;
+      },
+      displayedTasksStatView: function() {
+        if (this.displayedTasksStat == 'totalTasks') {
+          return 'Total Tasks: ' + this.tasks.length;
+        } else if (this.displayedTasksStat == 'leftToDo') {
+          return 'Tasks Left: ' + this.leftToDo;
+        } else if (this.displayedTasksStat == 'checkMarked') {
+          return 'Check Marked Tasks: ' + this.checkMarkedTasks;
+        } else if (this.displayedTasksStat == 'deletedTasks') {
+          return 'Deleted Tasks: ' + this.deletedTasks;
+        }
+      },
+      manageable: function() {
+        if (this.leftToDo < 10) {
+          return 'green';
+        } else {
+          return 'red';
+        }
+      },
+      percentageOfTasksCompleted: function() {
+        if (this.tasks.length == 0) {
+          return 0;
+        } else {
+          return (this.checkMarkedTasks / this.tasks.length) * 100;
+        }
+      }
+    }
+  });
+</script>
+</body>
